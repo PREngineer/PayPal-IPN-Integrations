@@ -181,28 +181,15 @@ switch ( $_GET['action'] )
     */
    case 'ipn':
       
+    // Validated
     if ( $pp->Validate_IPN() ) {
-      
-      // Send Email
-
-      // $subject = 'Instant Payment Notification - Received Payment';
-      // $to      = 'your@email.com';
-      // $body    =  "An instant payment notification was successfully received\n";
-      // $body   .= "from ".$_POST['payer_email']." on ".date('m/d/Y');
-      // $body   .= " at ".date('g:i A');
-      // $body   .= "\n\nDetails:\n\n";
-      // $transaction_type = explode('.', $_POST['item_number']);
-      // $body   .= "Organization ID: ".$transaction_type[0]." ".$transaction_type[1]."\n";
-      // $body   .= "Amount: ".$_POST['payment_gross']."\n";
-      // $body   .= "Date: ".date("Y-m-d")."\n";
-      // $body   .= "Payer E-mail: ".$_POST['payer_email']."\n";
-      // $body   .= "Payer Name: ".$_POST['first_name'].$_POST['last_name']."\n";
-      // $body   .= "Transaction ID: ".$_POST['txn_id']."\n";
-      // $body   .= "Receiver: ".$_POST['receiver_email']."\n";
-      // mail($to, $subject, $body);
-
-
-      // Update DB record or pass data to other script to do so
+      // Leave transaction as completed
+    }
+    // Failed to validate
+    else{
+      // Make sure to return that the transaction failed
+      $_POST[ 'payment_status' ] = "Failed";
+    }
 
       // Post the data back to processing script, using curl.
       $ch = curl_init( getenv('PROCESSING_URL') );
@@ -227,9 +214,7 @@ switch ( $_GET['action'] )
       );
 
       // Execute curl request
-      curl_exec( $ch );      
-        
-    }
+      curl_exec( $ch );
 
     break;
 }

@@ -74,8 +74,6 @@ class PayPal {
   private $log_level;
   private $log_file;
   
-  // Holds the last error encountered
-  private $last_error;
   // Holds the IPN response from PayPal
   private $ipn_response;
   // Contains the IPN POST values
@@ -98,8 +96,7 @@ class PayPal {
   */
   public function __construct( $instance, $log_mode, $log_level ) {
     
-    // Start with no errors or response
-    $this->last_error   = '';
+    // Start with no response
     $this->ipn_response = '';
     
     // Determine the proper PayPal Website to use
@@ -283,7 +280,7 @@ class PayPal {
     if ( $success )
       $text .= 'TRANSACTION COMPLETED' . " - ";
     else
-      $text .= 'TRANSACTION FAILED - ' . $this->last_error . " - ";
+      $text .= 'TRANSACTION FAILED - IPN Validation Failed - ';
 
     // Log the response from the PayPal server
     $text .= "[Paypal IPN Response] - " . $this->ipn_response . " - ";
