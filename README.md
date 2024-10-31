@@ -39,3 +39,7 @@ NOTE: You can implement your own Cancel and Complete pages if you want, instead 
 |pay.site.com | /index.php?action=cancel | NO | Acknowledge transaction cancellation|
 |pay.site.com | /index.php?action=complete | NO | Acknowledge completed checkout|
 |pay.site.com | /index.php?action=ipn | YES | Perform IPN validation|
+
+# Notes
+
+The [IPN Simulator](https://developer.paypal.com/dashboard/ipnSimulator) will no longer be supported.  It should only be used as a reference of what FINAL responses for validations look like, not to test the actual functionality of this implementation.
